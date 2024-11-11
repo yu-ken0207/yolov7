@@ -1,0 +1,9 @@
+train: /home/ken/Desktop/program/yolov7/train.txt
+val: /home/ken/Desktop/program/yolov7/test.txt
+test: ./coco/test-dev2017.txt
+
+# number of classes
+nc: 3
+
+# class names
+names: [ "cat", "monkey", "dog" ]

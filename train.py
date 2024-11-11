@@ -37,6 +37,7 @@ from utils.wandb_logging.wandb_utils import WandbLogger, check_wandb_resume
 
 logger = logging.getLogger(__name__)
 
+from send_email import send_email
 
 def train(hyp, opt, device, tb_writer=None):
     logger.info(colorstr('hyperparameters: ') + ', '.join(f'{k}={v}' for k, v in hyp.items()))
@@ -248,6 +249,8 @@ def train(hyp, opt, device, tb_writer=None):
                                             image_weights=opt.image_weights, quad=opt.quad, prefix=colorstr('train: '))
     mlc = np.concatenate(dataset.labels, 0)[:, 0].max()  # max label class
     nb = len(dataloader)  # number of batches
+    print(mlc)
+    print(nc)
     assert mlc < nc, 'Label class %g exceeds nc=%g in %s. Possible class labels are 0-%g' % (mlc, nc, opt.data, nc - 1)
 
     # Process 0
@@ -614,6 +617,7 @@ if __name__ == '__main__':
             logger.info(f"{prefix}Start with 'tensorboard --logdir {opt.project}', view at http://localhost:6006/")
             tb_writer = SummaryWriter(opt.save_dir)  # Tensorboard
         train(hyp, opt, device, tb_writer)
+        # send_email()
 
     # Evolve hyperparameters (optional)
     else:
@@ -703,3 +707,4 @@ if __name__ == '__main__':
         plot_evolution(yaml_file)
         print(f'Hyperparameter evolution complete. Best results saved as: {yaml_file}\n'
               f'Command to train a new model with these hyperparameters: $ python train.py --hyp {yaml_file}')
+        send_email()

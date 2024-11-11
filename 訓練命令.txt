@@ -1,0 +1,27 @@
+python train.py --device 0 --batch-size 8 --data data/cat_dog_monkey.yaml --img 640 --cfg cfg/training/yolov7.yaml --weights yolov7.pt
+
+nohup python train.py --device 0 --batch-size 8 --data data/cat_dog_monkey.yaml --img 640 --cfg cfg/training/yolov7.yaml --weights yolov7.pt &
+
+python detect.py --weights /home/ken/Desktop/program/yolov7/runs/train/exp2/weights/best.pt --conf 0.25 --img-size 640 --source /home/ken/Desktop/program/yolov7/monkey/20221011163559-3f1f047a283e3ec1c24e7cf24f30da00-w1200.jpeg
+
+python detect.py --weights /home/ken/Desktop/program/yolov7/runs/train/exp2/weights/best.pt --conf 0.25 --img-size 640 --source /home/ken/Desktop/program/yolov7/monkey/monkey.png
+
+影像抓取
+    ffmpeg -f v4l2 -i /dev/video2 -vf fps=20 -update 1 image.png
+
+tclsh script.tcl
+
+python detect.py --weights /home/ken/Desktop/program/yolov7/runs/train/exp17/weights/best.pt --conf 0.25 --img-size 640 --source /home/ken/Desktop/program/yolov7/image.png
+
+lsof | grep /dev/video
+
+ls /dev/video*
+
+正常啟用辨識
+~/anaconda3/envs/yolov7/bin/python detect.py --weights /home/ken/Desktop/program/yolov7/runs/train/exp17/weights/best.pt --conf 0.25 --img-size 640 --source 0 --project /home/ken/Desktop/program/yolov7/runs/detect --name real_time_result
+
+不錄影
+~/anaconda3/envs/yolov7/bin/python detect.py --weights /home/ken/Desktop/program/yolov7/runs/train/exp17/weights/best.pt --conf 0.25 --img-size 416 --source 0 --project /home/ken/Desktop/program/yolov7/runs/detect --name real_time_result --nosave --no-trace
+
+使用虛擬顯示 (Xvfb)
+xvfb-run -a ~/anaconda3/envs/yolov7/bin/python detect.py --weights /home/ken/Desktop/program/yolov7/runs/train/exp17/weights/best.pt --conf 0.25 --img-size 416 --source 0 --project /home/ken/Desktop/program/yolov7/runs/detect --name real_time_result --nosave --no-trace

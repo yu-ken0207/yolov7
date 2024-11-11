@@ -1,0 +1,10 @@
+
+train: /home/ken/Desktop/program/yolov7/train.txt
+val: /home/ken/Desktop/program/yolov7/val.txt
+
+# number of classes
+nc: 1
+
+# class names
+names: ["face"]
+
